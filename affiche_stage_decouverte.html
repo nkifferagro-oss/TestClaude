@@ -2,382 +2,372 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stage Découverte Reptiles</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #1a1a2e;
+      background: #f0f0f0;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: 'Nunito', sans-serif;
+      align-items: flex-start;
+      padding: 20px;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .poster {
-      width: 794px;
-      min-height: 1123px;
-      background: linear-gradient(160deg, #0f2027, #1a3a1a, #0f2027);
-      border: 6px solid #4caf50;
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-      padding: 0 0 40px 0;
-      box-shadow: 0 0 60px rgba(76, 175, 80, 0.4);
-    }
-
-    /* Scales background texture */
-    .poster::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(ellipse 80px 40px at 10% 15%, rgba(76,175,80,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 80px 40px at 90% 25%, rgba(76,175,80,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 80px 40px at 50% 60%, rgba(76,175,80,0.04) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Top banner */
-    .top-banner {
-      background: linear-gradient(90deg, #2e7d32, #66bb6a, #2e7d32);
-      padding: 14px 30px;
-      text-align: center;
-      letter-spacing: 3px;
-      font-size: 13px;
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-    }
-
-    .inscriptions-badge {
-      background: linear-gradient(135deg, #f9a825, #ff6f00);
-      color: #fff;
-      font-family: 'Bangers', cursive;
-      font-size: 38px;
-      letter-spacing: 4px;
-      text-align: center;
-      padding: 18px 20px 10px;
-      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    .inscriptions-badge::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: #fff;
-      margin: 8px auto 0;
-      border-radius: 2px;
-      opacity: 0.6;
-    }
-
-    .open-badge {
-      background: #ff6f00;
-      color: white;
-      font-size: 15px;
-      font-weight: 900;
-      text-align: center;
-      padding: 6px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    /* Main title area */
-    .title-area {
-      text-align: center;
-      padding: 28px 30px 10px;
-    }
-
-    .stage-label {
-      font-size: 15px;
-      color: #a5d6a7;
-      text-transform: uppercase;
-      letter-spacing: 6px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .main-title {
-      font-family: 'Bangers', cursive;
-      font-size: 86px;
-      color: #fff;
-      line-height: 0.9;
-      text-shadow: 4px 4px 0 #2e7d32, 8px 8px 0 rgba(0,0,0,0.4);
-      letter-spacing: 4px;
-    }
-
-    .main-title span {
-      color: #69f0ae;
-    }
-
-    .subtitle {
-      font-family: 'Bangers', cursive;
-      font-size: 38px;
-      color: #f9a825;
-      letter-spacing: 4px;
-      margin-top: 6px;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-    }
-
-    /* Dates pill */
-    .dates-pill {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      border: 2px solid #333;
+      padding: 12mm 14mm 10mm;
       display: flex;
-      justify-content: center;
-      margin: 22px 30px 10px;
+      flex-direction: column;
+      gap: 0;
     }
 
-    .dates-pill-inner {
-      background: linear-gradient(135deg, #1b5e20, #2e7d32);
-      border: 3px solid #69f0ae;
-      border-radius: 50px;
-      padding: 12px 40px;
+    /* ---- TOP BAND ---- */
+    .top-band {
+      background: #222;
+      color: #fff;
       text-align: center;
-      box-shadow: 0 0 20px rgba(105, 240, 174, 0.3);
-    }
-
-    .dates-pill-inner .label {
+      padding: 8px 10px;
       font-size: 11px;
-      color: #a5d6a7;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      font-weight: 700;
-    }
-
-    .dates-pill-inner .dates {
-      font-family: 'Bangers', cursive;
-      font-size: 42px;
-      color: #fff;
-      letter-spacing: 2px;
-      line-height: 1.1;
-    }
-
-    /* Snake emoji decoration */
-    .snake-deco {
-      text-align: center;
-      font-size: 58px;
-      margin: 10px 0 0;
-      filter: drop-shadow(0 0 12px rgba(105, 240, 174, 0.6));
-    }
-
-    /* Highlights grid */
-    .highlights {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin: 20px 35px;
-    }
-
-    .highlight-card {
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(105, 240, 174, 0.25);
-      border-radius: 14px;
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      transition: border-color 0.2s;
-    }
-
-    .highlight-card .icon {
-      font-size: 36px;
-      flex-shrink: 0;
-    }
-
-    .highlight-card .text strong {
-      display: block;
-      color: #69f0ae;
-      font-size: 14px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .highlight-card .text span {
-      color: #c8e6c9;
-      font-size: 13px;
-      font-weight: 400;
-    }
-
-    /* Who can come */
-    .who-section {
-      margin: 0 35px 20px;
-      background: rgba(249, 168, 37, 0.1);
-      border: 2px solid rgba(249, 168, 37, 0.4);
-      border-radius: 14px;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .who-icon { font-size: 40px; }
-
-    .who-text strong {
-      display: block;
-      color: #f9a825;
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .who-text span {
-      color: #ffe082;
-      font-size: 14px;
-    }
-
-    /* Bottom info bar */
-    .bottom-bar {
-      display: flex;
-      margin: 0 35px;
-      gap: 14px;
-    }
-
-    .info-block {
-      flex: 1;
-      background: linear-gradient(135deg, #1b5e20, #2e7d32);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-      border: 2px solid rgba(105, 240, 174, 0.3);
-    }
-
-    .info-block.price-block {
-      background: linear-gradient(135deg, #bf360c, #e64a19);
-      border-color: rgba(255, 171, 64, 0.5);
-    }
-
-    .info-block .info-label {
-      font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      text-transform: uppercase;
       letter-spacing: 3px;
-      font-weight: 700;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    /* ---- INSCRIPTIONS ---- */
+    .inscriptions {
+      border: 3px solid #222;
+      text-align: center;
+      padding: 10px 8px;
+      margin-bottom: 14px;
+    }
+
+    .inscriptions .ouvertes {
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #555;
       margin-bottom: 4px;
     }
 
-    .info-block .info-value {
-      font-family: 'Bangers', cursive;
-      font-size: 32px;
-      color: #fff;
+    .inscriptions .titre-inscriptions {
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
       letter-spacing: 2px;
+      color: #111;
+    }
+
+    .inscriptions .places {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ---- TITRE PRINCIPAL ---- */
+    .title-area {
+      text-align: center;
+      border-bottom: 2px solid #222;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .title-area .stage-label {
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .title-area h1 {
+      font-size: 58px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      line-height: 1;
+      color: #111;
+    }
+
+    .title-area .subtitle {
+      font-size: 16px;
+      color: #444;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ---- DATES ---- */
+    .dates-block {
+      border: 2px solid #222;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 14px;
+    }
+
+    .dates-block .date-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #666;
+      margin-bottom: 2px;
+    }
+
+    .dates-block .date-value {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #111;
+    }
+
+    .dates-block .date-year {
+      font-size: 13px;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    /* ---- AU PROGRAMME ---- */
+    .programme-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border-left: 4px solid #222;
+      padding-left: 8px;
+    }
+
+    .programme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .prog-item {
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .prog-item .bullet {
+      font-size: 22px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .prog-item strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .prog-item span {
+      font-size: 11px;
+      color: #555;
+    }
+
+    /* ---- PUBLIC ---- */
+    .public-block {
+      border: 1.5px solid #aaa;
+      border-radius: 4px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #f9f9f9;
+    }
+
+    .public-block .pub-icon {
+      font-size: 30px;
+      flex-shrink: 0;
+    }
+
+    .public-block strong {
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      display: block;
+      color: #111;
+    }
+
+    .public-block span {
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* ---- INFOS PRATIQUES ---- */
+    .infos-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 8px;
+      border-left: 4px solid #222;
+      padding-left: 8px;
+    }
+
+    .infos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .info-box {
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .info-box.price {
+      border: 2px solid #222;
+      background: #f5f5f5;
+    }
+
+    .info-box .info-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #777;
+      margin-bottom: 4px;
+    }
+
+    .info-box .info-value {
+      font-size: 22px;
+      font-weight: 900;
+      color: #111;
       line-height: 1.1;
     }
 
-    .info-block .info-sub {
-      font-size: 12px;
-      color: rgba(255,255,255,0.75);
-      margin-top: 4px;
+    .info-box .info-sub {
+      font-size: 10px;
+      color: #666;
+      margin-top: 3px;
     }
 
-    /* Footer */
+    /* ---- FOOTER ---- */
     .footer {
+      border-top: 2px solid #222;
+      padding-top: 10px;
       text-align: center;
-      margin-top: 28px;
-      padding: 0 30px;
     }
 
     .footer .cta {
-      font-family: 'Bangers', cursive;
-      font-size: 22px;
-      color: #f9a825;
-      letter-spacing: 3px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #111;
     }
 
-    .footer .contact-note {
-      font-size: 12px;
-      color: #81c784;
-      margin-top: 6px;
-      letter-spacing: 1px;
+    .footer .contact-sub {
+      font-size: 11px;
+      color: #666;
+      margin-top: 4px;
     }
 
-    .footer-snake {
-      font-size: 28px;
-      margin-top: 10px;
-      opacity: 0.5;
+    /* ---- PRINT ---- */
+    @media print {
+      body { background: none; padding: 0; }
+      .poster {
+        border: none;
+        width: 100%;
+        min-height: auto;
+        padding: 10mm 12mm 8mm;
+      }
     }
   </style>
 </head>
 <body>
   <div class="poster">
 
-    <div class="top-banner">Vacances de printemps 2026</div>
+    <div class="top-band">Vacances de printemps 2026</div>
 
-    <div class="inscriptions-badge">LES INSCRIPTIONS SONT OUVERTES !</div>
-    <div class="open-badge">Places limitées — Réservez vite !</div>
+    <div class="inscriptions">
+      <div class="ouvertes">Les inscriptions sont ouvertes</div>
+      <div class="titre-inscriptions">Réservez votre place !</div>
+      <div class="places">Places limitées — premier arrivé, premier servi</div>
+    </div>
 
     <div class="title-area">
       <div class="stage-label">Stage découverte</div>
-      <div class="main-title">REPTILES<br><span>&amp; PASSION</span></div>
+      <h1>Reptiles</h1>
       <div class="subtitle">Vis l'expérience de près !</div>
     </div>
 
-    <div class="snake-deco">🐍 🦎 🐊</div>
-
-    <div class="dates-pill">
-      <div class="dates-pill-inner">
-        <div class="label">Dates du stage</div>
-        <div class="dates">21 — 30 AVRIL</div>
-      </div>
+    <div class="dates-block">
+      <div class="date-label">Dates du stage</div>
+      <div class="date-value">21 — 30 AVRIL</div>
+      <div class="date-year">Vacances de printemps</div>
     </div>
 
-    <div class="highlights">
-      <div class="highlight-card">
-        <div class="icon">🔍</div>
-        <div class="text">
+    <div class="programme-title">Au programme</div>
+    <div class="programme-grid">
+      <div class="prog-item">
+        <div class="bullet">🔍</div>
+        <div>
           <strong>Découverte</strong>
           <span>Rencontre avec nos reptiles</span>
         </div>
       </div>
-      <div class="highlight-card">
-        <div class="icon">🤲</div>
-        <div class="text">
+      <div class="prog-item">
+        <div class="bullet">🤲</div>
+        <div>
           <strong>Manipulation</strong>
           <span>Approche et contact encadré</span>
         </div>
       </div>
-      <div class="highlight-card">
-        <div class="icon">🌿</div>
-        <div class="text">
+      <div class="prog-item">
+        <div class="bullet">🌿</div>
+        <div>
           <strong>Entretien</strong>
           <span>Soins et habitat des espèces</span>
         </div>
       </div>
-      <div class="highlight-card">
-        <div class="icon">💚</div>
-        <div class="text">
+      <div class="prog-item">
+        <div class="bullet">💚</div>
+        <div>
           <strong>Sensibilisation</strong>
           <span>Respect et bien-être animal</span>
         </div>
       </div>
     </div>
 
-    <div class="who-section">
-      <div class="who-icon">👦👧</div>
-      <div class="who-text">
+    <div class="public-block">
+      <div class="pub-icon">👦👧</div>
+      <div>
         <strong>Pour les 6 à 16 ans</strong>
         <span>Individuel, entre amis ou en fratrie — venez comme vous êtes !</span>
       </div>
     </div>
 
-    <div class="bottom-bar">
-      <div class="info-block">
-        <div class="info-label">Horaires</div>
-        <div class="info-value">10h30 – 12h30</div>
-        <div class="info-sub">Séance du matin</div>
+    <div class="infos-title">Informations pratiques</div>
+    <div class="infos-grid">
+      <div class="info-box">
+        <div class="info-label">Séance matin</div>
+        <div class="info-value">10h30<br>12h30</div>
       </div>
-      <div class="info-block">
-        <div class="info-label">Horaires</div>
-        <div class="info-value">14h00 – 16h00</div>
-        <div class="info-sub">Séance de l'après-midi</div>
+      <div class="info-box">
+        <div class="info-label">Séance après-midi</div>
+        <div class="info-value">14h00<br>16h00</div>
       </div>
-      <div class="info-block price-block">
+      <div class="info-box price">
         <div class="info-label">Tarif</div>
         <div class="info-value">59 €</div>
         <div class="info-sub">par séance / par enfant</div>
@@ -386,8 +376,7 @@
 
     <div class="footer">
       <div class="cta">Renseignements &amp; inscriptions en magasin</div>
-      <div class="contact-note">N'hésitez pas à nous demander — notre équipe est là pour vous !</div>
-      <div class="footer-snake">🐍 🐢 🦎 🐊 🐍</div>
+      <div class="contact-sub">Notre équipe est à votre disposition pour toute question</div>
     </div>
 
   </div>
