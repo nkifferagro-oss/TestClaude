@@ -7,7 +7,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #f0f0f0;
+      background: #e8e8e8;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -19,145 +19,145 @@
       width: 210mm;
       min-height: 297mm;
       background: #ffffff;
-      border: 2px solid #333;
-      padding: 12mm 14mm 10mm;
+      padding: 0 0 10mm 0;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      border: 1px solid #ccc;
     }
 
     /* ---- TOP BAND ---- */
     .top-band {
-      background: #222;
+      background: #2e7d32;
       color: #fff;
       text-align: center;
-      padding: 8px 10px;
+      padding: 9px 10px;
       font-size: 11px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       font-weight: bold;
-      margin-bottom: 14px;
     }
 
     /* ---- INSCRIPTIONS ---- */
     .inscriptions {
-      border: 3px solid #222;
+      background: #f57c00;
+      color: #fff;
       text-align: center;
-      padding: 10px 8px;
-      margin-bottom: 14px;
+      padding: 12px 10px;
     }
 
     .inscriptions .ouvertes {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: bold;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: #555;
-      margin-bottom: 4px;
+      opacity: 0.9;
+      margin-bottom: 3px;
     }
 
     .inscriptions .titre-inscriptions {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #111;
     }
 
     .inscriptions .places {
       font-size: 11px;
-      color: #666;
-      margin-top: 4px;
+      margin-top: 3px;
+      opacity: 0.85;
       font-style: italic;
     }
 
     /* ---- TITRE PRINCIPAL ---- */
     .title-area {
       text-align: center;
-      border-bottom: 2px solid #222;
-      padding-bottom: 12px;
-      margin-bottom: 14px;
+      padding: 16px 14mm 12px;
+      border-bottom: 3px solid #2e7d32;
     }
 
     .title-area .stage-label {
-      font-size: 12px;
-      letter-spacing: 5px;
+      font-size: 11px;
+      letter-spacing: 6px;
       text-transform: uppercase;
-      color: #666;
+      color: #2e7d32;
+      font-weight: bold;
       margin-bottom: 4px;
     }
 
     .title-area h1 {
-      font-size: 58px;
+      font-size: 64px;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       line-height: 1;
-      color: #111;
+      color: #1b1b1b;
     }
 
     .title-area .subtitle {
-      font-size: 16px;
-      color: #444;
+      font-size: 15px;
+      color: #555;
       margin-top: 6px;
       font-style: italic;
     }
 
     /* ---- DATES ---- */
     .dates-block {
-      border: 2px solid #222;
+      margin: 14px 14mm;
+      border: 2.5px solid #2e7d32;
+      border-radius: 6px;
       text-align: center;
       padding: 10px;
-      margin-bottom: 14px;
     }
 
     .dates-block .date-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #666;
+      letter-spacing: 4px;
+      color: #2e7d32;
+      font-weight: bold;
       margin-bottom: 2px;
     }
 
     .dates-block .date-value {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 900;
-      letter-spacing: 2px;
-      color: #111;
+      letter-spacing: 3px;
+      color: #1b1b1b;
     }
 
     .dates-block .date-year {
-      font-size: 13px;
-      color: #555;
+      font-size: 12px;
+      color: #777;
       margin-top: 2px;
     }
 
     /* ---- AU PROGRAMME ---- */
-    .programme-title {
-      font-size: 11px;
+    .section-title {
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: #666;
+      color: #2e7d32;
       font-weight: bold;
-      margin-bottom: 8px;
-      border-left: 4px solid #222;
+      margin: 0 14mm 8px;
       padding-left: 8px;
+      border-left: 4px solid #2e7d32;
     }
 
     .programme-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-bottom: 14px;
+      margin: 0 14mm 14px;
     }
 
     .prog-item {
-      border: 1.5px solid #ccc;
-      border-radius: 4px;
-      padding: 10px 12px;
+      border: 1.5px solid #c8e6c9;
+      border-radius: 5px;
+      padding: 9px 11px;
       display: flex;
       align-items: flex-start;
       gap: 10px;
+      background: #f9fdf9;
     }
 
     .prog-item .bullet {
@@ -171,7 +171,7 @@
       font-size: 13px;
       font-weight: 900;
       text-transform: uppercase;
-      color: #111;
+      color: #1b5e20;
     }
 
     .prog-item span {
@@ -181,90 +181,85 @@
 
     /* ---- PUBLIC ---- */
     .public-block {
-      border: 1.5px solid #aaa;
-      border-radius: 4px;
-      padding: 10px 14px;
-      margin-bottom: 14px;
+      border: 2px solid #f57c00;
+      border-radius: 5px;
+      padding: 11px 14px;
+      margin: 0 14mm 14px;
       display: flex;
       align-items: center;
       gap: 14px;
-      background: #f9f9f9;
+      background: #fff8f0;
     }
 
     .public-block .pub-icon {
-      font-size: 30px;
+      font-size: 32px;
       flex-shrink: 0;
     }
 
     .public-block strong {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 900;
       text-transform: uppercase;
       display: block;
-      color: #111;
+      color: #e65100;
     }
 
     .public-block span {
       font-size: 12px;
-      color: #555;
+      color: #666;
     }
 
     /* ---- INFOS PRATIQUES ---- */
-    .infos-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #666;
-      font-weight: bold;
-      margin-bottom: 8px;
-      border-left: 4px solid #222;
-      padding-left: 8px;
-    }
-
     .infos-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
-      margin-bottom: 16px;
+      margin: 0 14mm 16px;
     }
 
     .info-box {
-      border: 1.5px solid #ccc;
-      border-radius: 4px;
+      border: 1.5px solid #c8e6c9;
+      border-radius: 5px;
       padding: 10px;
       text-align: center;
+      background: #f9fdf9;
     }
 
     .info-box.price {
-      border: 2px solid #222;
-      background: #f5f5f5;
+      border: 2.5px solid #f57c00;
+      background: #fff8f0;
     }
 
     .info-box .info-label {
-      font-size: 10px;
+      font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #777;
+      color: #2e7d32;
       margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .info-box.price .info-label {
+      color: #e65100;
     }
 
     .info-box .info-value {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
-      color: #111;
+      color: #1b1b1b;
       line-height: 1.1;
     }
 
     .info-box .info-sub {
       font-size: 10px;
-      color: #666;
+      color: #777;
       margin-top: 3px;
     }
 
     /* ---- FOOTER ---- */
     .footer {
-      border-top: 2px solid #222;
-      padding-top: 10px;
+      border-top: 3px solid #2e7d32;
+      padding: 10px 14mm 0;
       text-align: center;
     }
 
@@ -273,24 +268,19 @@
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #111;
+      color: #1b5e20;
     }
 
     .footer .contact-sub {
       font-size: 11px;
-      color: #666;
+      color: #777;
       margin-top: 4px;
     }
 
     /* ---- PRINT ---- */
     @media print {
       body { background: none; padding: 0; }
-      .poster {
-        border: none;
-        width: 100%;
-        min-height: auto;
-        padding: 10mm 12mm 8mm;
-      }
+      .poster { border: none; width: 100%; min-height: auto; }
     }
   </style>
 </head>
@@ -308,7 +298,7 @@
     <div class="title-area">
       <div class="stage-label">Stage découverte</div>
       <h1>Reptiles</h1>
-      <div class="subtitle">Vis l'expérience de près !</div>
+      <div class="subtitle">Vivez l'expérience de près !</div>
     </div>
 
     <div class="dates-block">
@@ -317,7 +307,7 @@
       <div class="date-year">Vacances de printemps</div>
     </div>
 
-    <div class="programme-title">Au programme</div>
+    <div class="section-title">Au programme</div>
     <div class="programme-grid">
       <div class="prog-item">
         <div class="bullet">🔍</div>
@@ -357,7 +347,7 @@
       </div>
     </div>
 
-    <div class="infos-title">Informations pratiques</div>
+    <div class="section-title">Informations pratiques</div>
     <div class="infos-grid">
       <div class="info-box">
         <div class="info-label">Séance matin</div>
