@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage Découverte Reptiles</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .poster {
+      width: 794px;
+      min-height: 1123px;
+      background: linear-gradient(160deg, #0f2027, #1a3a1a, #0f2027);
+      border: 6px solid #4caf50;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      padding: 0 0 40px 0;
+      box-shadow: 0 0 60px rgba(76, 175, 80, 0.4);
+    }
+
+    /* Scales background texture */
+    .poster::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80px 40px at 10% 15%, rgba(76,175,80,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 80px 40px at 90% 25%, rgba(76,175,80,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 80px 40px at 50% 60%, rgba(76,175,80,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Top banner */
+    .top-banner {
+      background: linear-gradient(90deg, #2e7d32, #66bb6a, #2e7d32);
+      padding: 14px 30px;
+      text-align: center;
+      letter-spacing: 3px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .inscriptions-badge {
+      background: linear-gradient(135deg, #f9a825, #ff6f00);
+      color: #fff;
+      font-family: 'Bangers', cursive;
+      font-size: 38px;
+      letter-spacing: 4px;
+      text-align: center;
+      padding: 18px 20px 10px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .inscriptions-badge::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #fff;
+      margin: 8px auto 0;
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    .open-badge {
+      background: #ff6f00;
+      color: white;
+      font-size: 15px;
+      font-weight: 900;
+      text-align: center;
+      padding: 6px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Main title area */
+    .title-area {
+      text-align: center;
+      padding: 28px 30px 10px;
+    }
+
+    .stage-label {
+      font-size: 15px;
+      color: #a5d6a7;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .main-title {
+      font-family: 'Bangers', cursive;
+      font-size: 86px;
+      color: #fff;
+      line-height: 0.9;
+      text-shadow: 4px 4px 0 #2e7d32, 8px 8px 0 rgba(0,0,0,0.4);
+      letter-spacing: 4px;
+    }
+
+    .main-title span {
+      color: #69f0ae;
+    }
+
+    .subtitle {
+      font-family: 'Bangers', cursive;
+      font-size: 38px;
+      color: #f9a825;
+      letter-spacing: 4px;
+      margin-top: 6px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    }
+
+    /* Dates pill */
+    .dates-pill {
+      display: flex;
+      justify-content: center;
+      margin: 22px 30px 10px;
+    }
+
+    .dates-pill-inner {
+      background: linear-gradient(135deg, #1b5e20, #2e7d32);
+      border: 3px solid #69f0ae;
+      border-radius: 50px;
+      padding: 12px 40px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(105, 240, 174, 0.3);
+    }
+
+    .dates-pill-inner .label {
+      font-size: 11px;
+      color: #a5d6a7;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 700;
+    }
+
+    .dates-pill-inner .dates {
+      font-family: 'Bangers', cursive;
+      font-size: 42px;
+      color: #fff;
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    /* Snake emoji decoration */
+    .snake-deco {
+      text-align: center;
+      font-size: 58px;
+      margin: 10px 0 0;
+      filter: drop-shadow(0 0 12px rgba(105, 240, 174, 0.6));
+    }
+
+    /* Highlights grid */
+    .highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 35px;
+    }
+
+    .highlight-card {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(105, 240, 174, 0.25);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .highlight-card .icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .highlight-card .text strong {
+      display: block;
+      color: #69f0ae;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .highlight-card .text span {
+      color: #c8e6c9;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    /* Who can come */
+    .who-section {
+      margin: 0 35px 20px;
+      background: rgba(249, 168, 37, 0.1);
+      border: 2px solid rgba(249, 168, 37, 0.4);
+      border-radius: 14px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .who-icon { font-size: 40px; }
+
+    .who-text strong {
+      display: block;
+      color: #f9a825;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .who-text span {
+      color: #ffe082;
+      font-size: 14px;
+    }
+
+    /* Bottom info bar */
+    .bottom-bar {
+      display: flex;
+      margin: 0 35px;
+      gap: 14px;
+    }
+
+    .info-block {
+      flex: 1;
+      background: linear-gradient(135deg, #1b5e20, #2e7d32);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid rgba(105, 240, 174, 0.3);
+    }
+
+    .info-block.price-block {
+      background: linear-gradient(135deg, #bf360c, #e64a19);
+      border-color: rgba(255, 171, 64, 0.5);
+    }
+
+    .info-block .info-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .info-block .info-value {
+      font-family: 'Bangers', cursive;
+      font-size: 32px;
+      color: #fff;
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    .info-block .info-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      margin-top: 4px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 28px;
+      padding: 0 30px;
+    }
+
+    .footer .cta {
+      font-family: 'Bangers', cursive;
+      font-size: 22px;
+      color: #f9a825;
+      letter-spacing: 3px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .footer .contact-note {
+      font-size: 12px;
+      color: #81c784;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+
+    .footer-snake {
+      font-size: 28px;
+      margin-top: 10px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+
+    <div class="top-banner">Vacances de printemps 2026</div>
+
+    <div class="inscriptions-badge">LES INSCRIPTIONS SONT OUVERTES !</div>
+    <div class="open-badge">Places limitées — Réservez vite !</div>
+
+    <div class="title-area">
+      <div class="stage-label">Stage découverte</div>
+      <div class="main-title">REPTILES<br><span>&amp; PASSION</span></div>
+      <div class="subtitle">Vis l'expérience de près !</div>
+    </div>
+
+    <div class="snake-deco">🐍 🦎 🐊</div>
+
+    <div class="dates-pill">
+      <div class="dates-pill-inner">
+        <div class="label">Dates du stage</div>
+        <div class="dates">21 — 30 AVRIL</div>
+      </div>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="icon">🔍</div>
+        <div class="text">
+          <strong>Découverte</strong>
+          <span>Rencontre avec nos reptiles</span>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">🤲</div>
+        <div class="text">
+          <strong>Manipulation</strong>
+          <span>Approche et contact encadré</span>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">🌿</div>
+        <div class="text">
+          <strong>Entretien</strong>
+          <span>Soins et habitat des espèces</span>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">💚</div>
+        <div class="text">
+          <strong>Sensibilisation</strong>
+          <span>Respect et bien-être animal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="who-section">
+      <div class="who-icon">👦👧</div>
+      <div class="who-text">
+        <strong>Pour les 6 à 16 ans</strong>
+        <span>Individuel, entre amis ou en fratrie — venez comme vous êtes !</span>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="info-block">
+        <div class="info-label">Horaires</div>
+        <div class="info-value">10h30 – 12h30</div>
+        <div class="info-sub">Séance du matin</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Horaires</div>
+        <div class="info-value">14h00 – 16h00</div>
+        <div class="info-sub">Séance de l'après-midi</div>
+      </div>
+      <div class="info-block price-block">
+        <div class="info-label">Tarif</div>
+        <div class="info-value">59 €</div>
+        <div class="info-sub">par séance / par enfant</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cta">Renseignements &amp; inscriptions en magasin</div>
+      <div class="contact-note">N'hésitez pas à nous demander — notre équipe est là pour vous !</div>
+      <div class="footer-snake">🐍 🐢 🦎 🐊 🐍</div>
+    </div>
+
+  </div>
+</body>
+</html>
