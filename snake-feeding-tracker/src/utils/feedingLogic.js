@@ -107,9 +107,9 @@ export function getSnakesToFeed(snakes, currentWeek) {
       if (weekHistory[w] === 'm') { inMolt = true; break; }
     }
 
-    // Check if snake refused last time (for display info)
-    const lastRefused = weekHistory[currentWeek - 1] === 'ref' ||
-      (lastMealWeek !== null && weekHistory[currentWeek - 1] === 'ref');
+    // Refused last week or already refused this week (still needs food)
+    const lastRefused = weekHistory[currentWeek - 1] === 'ref';
+    const refusedThisWeek = weekHistory[currentWeek] === 'ref';
 
     result.push({
       ...snake,
@@ -118,6 +118,7 @@ export function getSnakesToFeed(snakes, currentWeek) {
       weeksSinceLastMeal: isFinite(weeksSinceLastMeal) ? weeksSinceLastMeal : null,
       inMolt,
       lastRefused,
+      refusedThisWeek,
     });
   }
 

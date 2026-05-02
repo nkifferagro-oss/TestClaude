@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export default function FeedingResults({ results, onBack, onReset }) {
   const { snakesToFeed, preySummary, week } = results;
   const { confirmed, tentative } = preySummary;
@@ -7,6 +9,21 @@ export default function FeedingResults({ results, onBack, onReset }) {
 
   const totalPrey = confirmed.reduce((s, g) => s + g.total, 0);
   const totalTentative = tentative.reduce((s, g) => s + g.total, 0);
+
+  const handleCopy = () => {
+    const lines = [`🐍 Proies à sortir — Semaine ${week}`, ''];
+    if (confirmed.length > 0) {
+      confirmed.forEach((g) => lines.push(`${g.preySize} : ${g.total}`));
+    }
+    if (tentative.length > 0) {
+      lines.push('');
+      lines.push('À vérifier (mue) :');
+      tentative.forEach((g) => lines.push(`${g.preySize} : ${g.total} ?`));
+    }
+    lines.push('');
+    lines.push(`Total : ${totalPrey + totalTentative} proie(s)`);
+    navigator.clipboard.writeText(lines.join('\n'));
+  };
 
   if (snakesToFeed.length === 0) {
     return (
@@ -28,13 +45,17 @@ export default function FeedingResults({ results, onBack, onReset }) {
     <div className="results-layout">
       {/* PREY SUMMARY */}
       <div className="card prey-card">
-        <h2 className="card-title">
-          🥩 Proies à sortir — Semaine {week}
-        </h2>
+        <div className="card-title-row">
+          <h2 className="card-title">🥩 Proies à sortir — S{week}</h2>
+          <div className="card-actions">
+            <button className="btn-icon-sm" title="Copier la liste" onClick={handleCopy}>📋</button>
+            <button className="btn-icon-sm no-print" title="Imprimer" onClick={() => window.print()}>🖨️</button>
+          </div>
+        </div>
 
         {confirmed.length > 0 && (
           <>
-            <div className="section-label">Confirmées ({totalPrey} proies)</div>
+            <div className="section-label">Confirmées ({totalPrey})</div>
             <ul className="prey-list">
               {confirmed.map((g) => (
                 <li key={g.preySize} className="prey-item">
@@ -49,13 +70,13 @@ export default function FeedingResults({ results, onBack, onReset }) {
         {tentative.length > 0 && (
           <>
             <div className="section-label tentative">
-              En attente de mue ({totalTentative} proies — à vérifier)
+              En attente de mue ({totalTentative} — à vérifier)
             </div>
             <ul className="prey-list tentative-list">
               {tentative.map((g) => (
                 <li key={g.preySize} className="prey-item tentative">
                   <span className="prey-name">{g.preySize}</span>
-                  <span className="prey-qty">{g.total} ?</span>
+                  <span className="prey-qty">{g.total}&thinsp;?</span>
                 </li>
               ))}
             </ul>
@@ -70,9 +91,7 @@ export default function FeedingResults({ results, onBack, onReset }) {
 
       {/* SNAKE LIST */}
       <div className="card snake-card">
-        <h2 className="card-title">
-          🐍 Serpents à nourrir — Semaine {week}
-        </h2>
+        <h2 className="card-title">🐍 Serpents à nourrir — Semaine {week}</h2>
 
         {regularSnakes.length > 0 && (
           <>
@@ -88,7 +107,7 @@ export default function FeedingResults({ results, onBack, onReset }) {
           </>
         )}
 
-        <div className="action-row mt-lg">
+        <div className="action-row mt-lg no-print">
           <button className="btn btn-secondary" onClick={onBack}>← Changer de semaine</button>
           <button className="btn btn-outline" onClick={onReset}>Nouveau fichier</button>
         </div>
@@ -120,16 +139,19 @@ function SnakeTable({ snakes, isMolt = false }) {
               </td>
               <td className="td-center">{snake.nbSpecimens}</td>
               <td className="td-center">
-                {snake.freqWeeks === 1 ? 'Chaque semaine' : `Toutes les ${snake.freqWeeks} sem.`}
+                {snake.freqWeeks === 1 ? 'Chaque sem.' : `/ ${snake.freqWeeks} sem.`}
               </td>
               <td className="td-center">
                 {snake.lastMealWeek
-                  ? `S${snake.lastMealWeek} (il y a ${snake.weeksSinceLastMeal} sem.)`
-                  : <span className="muted">Aucun historique</span>}
+                  ? `S${snake.lastMealWeek} (−${snake.weeksSinceLastMeal} sem.)`
+                  : <span className="muted">—</span>}
               </td>
               <td className="td-info">
                 {isMolt && <span className="badge badge-molt">En mue ?</span>}
-                {snake.lastRefused && !isMolt && <span className="badge badge-ref">A refusé S{snake.lastMealWeek ? snake.lastMealWeek + 1 : '?'}</span>}
+                {snake.refusedThisWeek && <span className="badge badge-ref">Refus S{snake.lastMealWeek != null ? snake.lastMealWeek + snake.freqWeeks : week}</span>}
+                {!isMolt && !snake.refusedThisWeek && snake.lastRefused && (
+                  <span className="badge badge-ref">Refus sem. préc.</span>
+                )}
               </td>
             </tr>
           ))}

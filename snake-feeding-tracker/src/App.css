@@ -197,11 +197,19 @@ body {
 .drop-text { font-size: 1rem; font-weight: 500; color: var(--grey-600); }
 .drop-hint { font-size: 0.8rem; color: var(--grey-400); margin-top: 0.25rem; }
 
+.format-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
 .format-info h3 {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--grey-600);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
 }
 
 .table-wrapper { overflow-x: auto; }
@@ -326,6 +334,23 @@ body {
 }
 .btn-outline:hover { background: var(--grey-100); }
 .btn-large { padding: 0.75rem 1.5rem; font-size: 1rem; margin-top: 1.25rem; }
+.btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+
+.btn-icon-sm {
+  background: none;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.12s;
+  color: var(--grey-600);
+}
+.btn-icon-sm:hover { background: var(--grey-100); border-color: var(--grey-400); }
 
 /* ─── Results layout ─────────────────────────────────────── */
 .results-layout {
@@ -340,6 +365,15 @@ body {
 
 /* ─── Prey list ──────────────────────────────────────────── */
 .prey-card { position: sticky; top: 1rem; }
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+.card-title-row .card-title { margin-bottom: 0; }
+.card-actions { display: flex; gap: 0.4rem; }
 
 .section-label {
   font-size: 0.78rem;
@@ -431,3 +465,42 @@ body {
   flex-wrap: wrap;
 }
 .mt-lg { margin-top: 1.5rem; }
+
+/* ─── Print ──────────────────────────────────────────────── */
+@media print {
+  .no-print,
+  .app-header,
+  .stepper,
+  .action-row,
+  .card-actions { display: none !important; }
+
+  body { background: white; color: black; font-size: 11pt; }
+
+  .app-main { padding: 0; max-width: 100%; }
+
+  .results-layout {
+    display: grid;
+    grid-template-columns: 200pt 1fr;
+    gap: 16pt;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1pt solid #ccc;
+    padding: 12pt;
+    break-inside: avoid;
+  }
+
+  .prey-card { position: static; }
+
+  .prey-item {
+    background: #f0f8f4 !important;
+    padding: 4pt 8pt;
+  }
+  .tentative-list .prey-item { background: #fff3e0 !important; }
+
+  .snake-table th { background: #f0f0f0 !important; }
+  .row-molt { background: #fffde7 !important; }
+
+  .app-footer { display: none; }
+}

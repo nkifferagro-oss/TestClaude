@@ -38,11 +38,9 @@ export default function FileUpload({ onFileUpload }) {
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
       >
-        {loading ? (
-          <div className="drop-icon">⏳</div>
-        ) : (
-          <div className="drop-icon">📂</div>
-        )}
+        {loading
+          ? <div className="drop-icon">⏳</div>
+          : <div className="drop-icon">📂</div>}
         <p className="drop-text">
           {loading ? 'Chargement en cours…' : 'Cliquer ou déposer le fichier ici'}
         </p>
@@ -57,13 +55,24 @@ export default function FileUpload({ onFileUpload }) {
       </div>
 
       <div className="format-info">
-        <h3>Format attendu du tableur :</h3>
+        <div className="format-header">
+          <h3>Format attendu du tableur :</h3>
+          <a
+            href="exemple_suivi.xlsx"
+            download
+            className="btn btn-outline btn-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            ⬇ Télécharger un exemple
+          </a>
+        </div>
+
         <div className="table-wrapper">
           <table className="format-table">
             <thead>
               <tr>
                 <th>A — Espèce</th>
-                <th>B — Nb spécimens</th>
+                <th>B — Nb</th>
                 <th>C — Taille proie</th>
                 <th>D — Fréquence</th>
                 <th>E — S1</th>
@@ -93,6 +102,7 @@ export default function FileUpload({ onFileUpload }) {
             </tbody>
           </table>
         </div>
+
         <div className="legend">
           <span className="legend-item"><b className="status-ok">ok</b> Repas accepté</span>
           <span className="legend-item"><b className="status-ref">ref</b> Proie refusée</span>
