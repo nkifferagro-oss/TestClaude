@@ -2,16 +2,29 @@ import { useRef, useState } from 'react';
 
 const ACCEPTED = '.xlsx,.xls,.csv,.ods';
 
-export default function FileUpload({ onFileUpload }) {
+export default function FileUpload({ onFileUpload, onUrlUpload }) {
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState('file');
+  const [url, setUrl] = useState('');
 
   const handleFile = async (file) => {
     if (!file) return;
     setLoading(true);
     try {
       await onFileUpload(file);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUrl = async (e) => {
+    e.preventDefault();
+    if (!url.trim()) return;
+    setLoading(true);
+    try {
+      await onUrlUpload(url.trim());
     } finally {
       setLoading(false);
     }
@@ -31,28 +44,69 @@ export default function FileUpload({ onFileUpload }) {
         Chargez votre fichier Excel (.xlsx / .xls), CSV ou ODS contenant les données de nourrissage.
       </p>
 
-      <div
-        className={`drop-zone ${dragging ? 'drag-over' : ''}`}
-        onClick={() => inputRef.current?.click()}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={onDrop}
-      >
-        {loading
-          ? <div className="drop-icon">⏳</div>
-          : <div className="drop-icon">📂</div>}
-        <p className="drop-text">
-          {loading ? 'Chargement en cours…' : 'Cliquer ou déposer le fichier ici'}
-        </p>
-        <p className="drop-hint">{ACCEPTED}</p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept={ACCEPTED}
-          style={{ display: 'none' }}
-          onChange={(e) => handleFile(e.target.files[0])}
-        />
+      <div className="upload-tabs">
+        <button
+          className={`upload-tab ${mode === 'file' ? 'active' : ''}`}
+          onClick={() => setMode('file')}
+        >
+          📂 Fichier local
+        </button>
+        <button
+          className={`upload-tab ${mode === 'url' ? 'active' : ''}`}
+          onClick={() => setMode('url')}
+        >
+          🌐 URL distante
+        </button>
       </div>
+
+      {mode === 'file' ? (
+        <div
+          className={`drop-zone ${dragging ? 'drag-over' : ''}`}
+          onClick={() => inputRef.current?.click()}
+          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={onDrop}
+        >
+          {loading
+            ? <div className="drop-icon">⏳</div>
+            : <div className="drop-icon">📂</div>}
+          <p className="drop-text">
+            {loading ? 'Chargement en cours…' : 'Cliquer ou déposer le fichier ici'}
+          </p>
+          <p className="drop-hint">{ACCEPTED}</p>
+          <input
+            ref={inputRef}
+            type="file"
+            accept={ACCEPTED}
+            style={{ display: 'none' }}
+            onChange={(e) => handleFile(e.target.files[0])}
+          />
+        </div>
+      ) : (
+        <form className="url-form" onSubmit={handleUrl}>
+          <div className="url-input-row">
+            <input
+              className="url-input"
+              type="url"
+              placeholder="https://exemple.com/suivi.xlsx"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              disabled={loading}
+              required
+            />
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={loading || !url.trim()}
+            >
+              {loading ? '⏳' : 'Charger'}
+            </button>
+          </div>
+          <p className="url-hint">
+            Lien direct vers un fichier Excel, CSV ou ODS accessible publiquement.
+          </p>
+        </form>
+      )}
 
       <div className="format-info">
         <div className="format-header">

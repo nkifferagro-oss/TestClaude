@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FileUpload from './components/FileUpload';
 import WeekSelector from './components/WeekSelector';
 import FeedingResults from './components/FeedingResults';
-import { parseSpreadsheet } from './utils/parseSpreadsheet';
+import { parseSpreadsheet, parseSpreadsheetFromUrl } from './utils/parseSpreadsheet';
 import { getSnakesToFeed, getPreySummary } from './utils/feedingLogic';
 
 export default function App() {
@@ -14,16 +14,30 @@ export default function App() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
 
+  const loadData = ({ snakes, maxWeek: max }, sourceName) => {
+    setSnakeData(snakes);
+    setMaxWeek(max);
+    setCurrentWeek(max + 1);
+    setFileName(sourceName);
+    setStep(2);
+  };
+
   const handleFileUpload = async (file) => {
     setError(null);
     try {
-      const { snakes, maxWeek: max } = await parseSpreadsheet(file);
-      setSnakeData(snakes);
-      setMaxWeek(max);
-      const nextWeek = max + 1;
-      setCurrentWeek(nextWeek);
-      setFileName(file.name);
-      setStep(2);
+      const parsed = await parseSpreadsheet(file);
+      loadData(parsed, file.name);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleUrlUpload = async (url) => {
+    setError(null);
+    try {
+      const parsed = await parseSpreadsheetFromUrl(url);
+      const sourceName = url.split('/').pop() || url;
+      loadData(parsed, sourceName);
     } catch (err) {
       setError(err.message);
     }
@@ -89,7 +103,7 @@ export default function App() {
           </div>
         )}
 
-        {step === 1 && <FileUpload onFileUpload={handleFileUpload} />}
+        {step === 1 && <FileUpload onFileUpload={handleFileUpload} onUrlUpload={handleUrlUpload} />}
         {step === 2 && (
           <WeekSelector
             maxWeek={maxWeek}

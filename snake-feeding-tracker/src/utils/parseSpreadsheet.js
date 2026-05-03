@@ -41,73 +41,89 @@ function extractWeekNumber(header) {
  *
  * Returns: { snakes: Snake[], maxWeek: number }
  */
+function parseWorkbook(workbook) {
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+
+  if (rows.length < 2) {
+    throw new Error('Le fichier est vide ou ne contient pas de données.');
+  }
+
+  const headerRow = rows[0];
+
+  const weekCols = [];
+  for (let i = 4; i < headerRow.length; i++) {
+    const h = String(headerRow[i]).trim();
+    if (h === '') continue;
+    const wn = extractWeekNumber(h);
+    if (wn !== null) {
+      weekCols.push({ colIndex: i, weekNumber: wn });
+    } else {
+      weekCols.push({ colIndex: i, weekNumber: i - 3 });
+    }
+  }
+
+  const snakes = [];
+  for (let r = 1; r < rows.length; r++) {
+    const row = rows[r];
+    const species = String(row[0] ?? '').trim();
+    if (!species) continue;
+
+    const nbSpecimens = Math.max(1, parseInt(String(row[1]).trim(), 10) || 1);
+    const preySize = String(row[2] ?? '').trim();
+    const frequency = parseFrequency(String(row[3] ?? '').trim());
+
+    const weekHistory = {};
+    for (const { colIndex, weekNumber } of weekCols) {
+      const val = String(row[colIndex] ?? '').trim();
+      if (val !== '') {
+        weekHistory[weekNumber] = val.toLowerCase();
+      }
+    }
+
+    snakes.push({ species, nbSpecimens, preySize, frequency, weekHistory });
+  }
+
+  if (snakes.length === 0) {
+    throw new Error('Aucune donnée serpent trouvée. Vérifiez le format du fichier.');
+  }
+
+  const maxWeek = weekCols.length > 0
+    ? Math.max(...weekCols.map((w) => w.weekNumber))
+    : 0;
+
+  return { snakes, maxWeek };
+}
+
 export function parseSpreadsheet(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-
     reader.onload = (e) => {
       try {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
-
-        if (rows.length < 2) {
-          throw new Error('Le fichier est vide ou ne contient pas de données.');
-        }
-
-        const headerRow = rows[0];
-
-        // Detect week columns: columns index >= 4 (0-based) with parseable week numbers
-        const weekCols = [];
-        for (let i = 4; i < headerRow.length; i++) {
-          const h = String(headerRow[i]).trim();
-          if (h === '') continue;
-          const wn = extractWeekNumber(h);
-          if (wn !== null) {
-            weekCols.push({ colIndex: i, weekNumber: wn });
-          } else {
-            // Use sequential order for unnamed columns
-            weekCols.push({ colIndex: i, weekNumber: i - 3 });
-          }
-        }
-
-        const snakes = [];
-        for (let r = 1; r < rows.length; r++) {
-          const row = rows[r];
-          const species = String(row[0] ?? '').trim();
-          if (!species) continue; // skip blank rows
-
-          const nbSpecimens = Math.max(1, parseInt(String(row[1]).trim(), 10) || 1);
-          const preySize = String(row[2] ?? '').trim();
-          const frequency = parseFrequency(String(row[3] ?? '').trim());
-
-          const weekHistory = {};
-          for (const { colIndex, weekNumber } of weekCols) {
-            const val = String(row[colIndex] ?? '').trim();
-            if (val !== '') {
-              weekHistory[weekNumber] = val.toLowerCase();
-            }
-          }
-
-          snakes.push({ species, nbSpecimens, preySize, frequency, weekHistory });
-        }
-
-        if (snakes.length === 0) {
-          throw new Error('Aucune donnée serpent trouvée. Vérifiez le format du fichier.');
-        }
-
-        const maxWeek = weekCols.length > 0
-          ? Math.max(...weekCols.map((w) => w.weekNumber))
-          : 0;
-
-        resolve({ snakes, maxWeek });
+        resolve(parseWorkbook(workbook));
       } catch (err) {
         reject(err);
       }
     };
-
     reader.onerror = () => reject(new Error('Impossible de lire le fichier.'));
     reader.readAsArrayBuffer(file);
   });
+}
+
+export async function parseSpreadsheetFromUrl(url) {
+  let response;
+  try {
+    response = await fetch(url);
+  } catch {
+    throw new Error('Impossible de joindre l\'URL. Vérifiez l\'adresse et votre connexion.');
+  }
+  if (!response.ok) {
+    throw new Error(`Erreur HTTP ${response.status} lors du chargement de l'URL.`);
+  }
+  const buffer = await response.arrayBuffer();
+  const data = new Uint8Array(buffer);
+  const workbook = XLSX.read(data, { type: 'array' });
+  return parseWorkbook(workbook);
 }
